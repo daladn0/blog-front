@@ -18,6 +18,14 @@ const routes = [
       layout: "EmptyLayout",
     },
   },
+  {
+    path: "/signup",
+    name: "signup",
+    component: () => import("@/views/SignupPage.vue"),
+    meta: {
+      layout: "EmptyLayout",
+    },
+  },
 ];
 
 const router = createRouter({
