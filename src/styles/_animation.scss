@@ -9,3 +9,21 @@
   transform: translateY(20px);
   opacity: 0;
 }
+
+// toasts animation
+
+.toasts-move,
+.toasts-enter-active,
+.toasts-leave-active {
+  transition: all 0.3s ease;
+}
+
+.toasts-enter-from,
+.toasts-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.toasts-leave-active {
+  position: absolute;
+  bottom: 0;
+}

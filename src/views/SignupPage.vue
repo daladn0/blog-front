@@ -24,6 +24,8 @@
 import AuthForm from "@/components/common/AuthForm.vue";
 import { signupFormFields } from "@/constants";
 import { nextTick } from "@vue/runtime-core";
+import { mapActions } from "vuex";
+import { TOAST_TYPES } from "@/constants";
 export default {
   name: "SignupPage",
   components: {
@@ -38,7 +40,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions("toast", ["addNewToast"]),
     async onFormSubmit(model) {
+      this.errorMessage = null;
       this.isLoading = true;
       const { response, error, errorMessage } = await this.$withAsync(
         this.$api.post,
@@ -48,7 +52,14 @@ export default {
       this.isLoading = false;
 
       if (response) {
-        console.log(response);
+        this.$router.push({ name: "login" });
+
+        setTimeout(() => {
+          this.addNewToast({
+            type: TOAST_TYPES.SUCCESS,
+            message: "Successful registration",
+          });
+        }, 500);
       }
 
       if (error) {

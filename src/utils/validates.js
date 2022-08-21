@@ -1,4 +1,8 @@
-import { MIN_USERNAME_LENGTH, MIN_PASSWORD_LENGTH } from "@/constants";
+import {
+  MIN_USERNAME_LENGTH,
+  MAX_USERNAME_LENGTH,
+  MIN_PASSWORD_LENGTH,
+} from "@/constants";
 
 export const validateLoginOrEmail = (value) => {
   if (!value) {
@@ -11,6 +15,10 @@ export const validateLoginOrEmail = (value) => {
 export const validateUsername = (value) => {
   if (!value || value.length < MIN_USERNAME_LENGTH) {
     return `Username should have at least ${MIN_USERNAME_LENGTH} chars`;
+  }
+
+  if (value.length > MAX_USERNAME_LENGTH) {
+    return `Username should not be longer than ${MAX_USERNAME_LENGTH} chars`;
   }
 
   return true;

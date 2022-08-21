@@ -14,6 +14,7 @@
 import AuthForm from "@/components/common/AuthForm.vue";
 import { mapActions } from "vuex";
 import { loginFormFields } from "@/constants";
+import { TOAST_TYPES } from "@/constants";
 export default {
   name: "LoginPage",
   components: {
@@ -28,7 +29,9 @@ export default {
   },
   methods: {
     ...mapActions("user", ["login"]),
+    ...mapActions("toast", ["addNewToast"]),
     async onFormSubmit(model) {
+      this.errorMessage = null;
       this.isLoading = true;
       const { response, errorMessage } = await this.$withAsync(
         this.$api.post,
@@ -42,6 +45,13 @@ export default {
 
         this.login(user);
         this.$router.push({ name: "home" });
+
+        setTimeout(() => {
+          this.addNewToast({
+            type: TOAST_TYPES.SUCCESS,
+            message: "You've logged in",
+          });
+        }, 500);
       }
 
       if (errorMessage) this.errorMessage = errorMessage;

@@ -61,4 +61,11 @@ export const signupFormFields = [
 ];
 
 export const MIN_USERNAME_LENGTH = 2;
+export const MAX_USERNAME_LENGTH = 32;
 export const MIN_PASSWORD_LENGTH = 6;
+
+export const TOAST_TYPES = {
+  SUCCESS: "SUCCESS",
+  ERROR: "ERROR",
+  WARNING: "WARNING",
+};

@@ -18,20 +18,20 @@
           >
         </router-link>
         <div class="flex items-center space-x-4 h-full">
-          <div v-if="isAuth" class="h-full relative">
+          <div v-if="isAuth" class="h-full relative flex items-center">
             <button
               id="profile"
               @click="showDropdown = !showDropdown"
-              class="flex items-center space-x-4 px-2 text-sm text-gray-600 font-medium h-full transition-all hover:bg-gray-200"
+              class="max-w-xs flex items-center space-x-4 px-2 py-1 rounded-full text-sm text-gray-600 font-medium transition-all hover:bg-gray-200"
               :class="{ 'bg-gray-200': showDropdown }"
             >
               <img
-                class="w-8 h-8 rounded-full object-cover"
+                class="w-8 h-8 rounded-full object-cover flex-shrink-0"
                 @error="onImgError"
                 :src="currentUser.avatar"
                 :alt="currentUser.username"
               />
-              <span>{{ currentUser.username }}</span>
+              <span class="truncate">{{ currentUser.username }}</span>
             </button>
             <transition name="slide-down">
               <HeaderDropdown
