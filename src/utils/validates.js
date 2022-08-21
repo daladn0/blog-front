@@ -42,7 +42,7 @@ export const validatePassword = (value) => {
 export const validateConfirmPassword = (value, ctx) => {
   const password = ctx?.form?.password;
 
-  if (!value) return "Password is required";
+  if (!value) return "Confirm password";
 
   if (value !== password) return "Passwords don't match";
 

@@ -1,10 +1,14 @@
 <template>
   <div class="w-full flex items-center justify-center">
     <AuthForm
+      ref="form"
       class="m-5"
-      :formFields="signupFormFields"
       formHeading="Sign up"
       @formSubmitted="onFormSubmit"
+      :formFields="signupFormFields"
+      :errors="errors"
+      :errorMessage="errorMessage"
+      :isLoading="isLoading"
     >
       <template #footer>
         <router-link
@@ -19,6 +23,7 @@
 <script>
 import AuthForm from "@/components/common/AuthForm.vue";
 import { signupFormFields } from "@/constants";
+import { nextTick } from "@vue/runtime-core";
 export default {
   name: "SignupPage",
   components: {
@@ -27,11 +32,35 @@ export default {
   data() {
     return {
       signupFormFields,
+      isLoading: false,
+      errors: null,
+      errorMessage: null,
     };
   },
   methods: {
-    onFormSubmit(model) {
-      console.log(model);
+    async onFormSubmit(model) {
+      this.isLoading = true;
+      const { response, error, errorMessage } = await this.$withAsync(
+        this.$api.post,
+        "/user/registration",
+        model
+      );
+      this.isLoading = false;
+
+      if (response) {
+        console.log(response);
+      }
+
+      if (error) {
+        this.errors = error?.response?.data?.errors;
+        if (this.errors && this.errors.length) {
+          nextTick(() => {
+            this.$refs.form.clickErrorBtn();
+          });
+        } else {
+          this.errorMessage = errorMessage;
+        }
+      }
     },
   },
 };

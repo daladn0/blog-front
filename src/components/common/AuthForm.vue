@@ -1,5 +1,6 @@
 <template>
   <Form
+    v-slot="{ setErrors }"
     @submit="onFormSubmit"
     @invalid-submit="onInvalidSubmit"
     class="bg-white rounded-md shadow-2xl p-5 w-full max-w-lg"
@@ -89,6 +90,14 @@
         >
       </div>
     </slot>
+
+    <!-- set error btn -->
+    <button
+      type="button"
+      class="z-[-1] absolute invisible pointer-events-none"
+      ref="errorBtn"
+      @click="setFormErrors(setErrors)"
+    ></button>
   </Form>
 </template>
 <script>
@@ -116,10 +125,23 @@ export default {
     errorMessage: {
       type: String,
     },
+    errors: {
+      type: Array,
+    },
   },
   methods: {
     onFormSubmit(model) {
       this.$emit("formSubmitted", model);
+    },
+    clickErrorBtn() {
+      this.$refs.errorBtn.click();
+    },
+    setFormErrors(setErrors) {
+      const errorsObj = {};
+      this.errors.forEach((error) => {
+        errorsObj[error.param] = error.msg;
+      });
+      setErrors(errorsObj);
     },
     onInvalidSubmit({ errors }) {
       const firstInvalidField = this.$refs[Object.keys(errors)[0]];
