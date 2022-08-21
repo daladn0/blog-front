@@ -62,7 +62,19 @@
       </div>
     </Field>
 
-    <AppBtn type="submit"> submit </AppBtn>
+    <span
+      v-if="errorMessage"
+      class="text-sm font-medium mb-8 text-red-500 text-center block w-full"
+      >{{ errorMessage }}</span
+    >
+
+    <button
+      class="uppercase block w-full bg-indigo-600 focus:bg-indigo-800 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2"
+      type="submit"
+    >
+      <LoadingSpinner class="mx-auto w-6 h-6" v-if="isLoading" />
+      <span v-else>submit</span>
+    </button>
     <slot name="footer">
       <div class="flex flex-col items-center sm:flex-row justify-between mt-4">
         <span
@@ -95,6 +107,13 @@ export default {
       type: Array,
     },
     formHeading: {
+      type: String,
+    },
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
+    errorMessage: {
       type: String,
     },
   },

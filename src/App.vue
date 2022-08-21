@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import MainLayout from "@/layouts/MainLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 export default {
@@ -21,6 +22,16 @@ export default {
 
       return layout;
     },
+  },
+  methods: {
+    ...mapActions("user", ["login"]),
+  },
+  async mounted() {
+    const { response } = await this.$withAsync(this.$api.get, "/user/refresh");
+
+    if (response) {
+      this.login(response.data.user);
+    }
   },
 };
 </script>

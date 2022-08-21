@@ -1,13 +1,15 @@
 <template>
   <div>
-    <header>
-      <router-link :to="{ name: 'login' }">Login</router-link>
-    </header>
+    <AppHeader />
     <slot />
   </div>
 </template>
 <script>
+import AppHeader from "@/components/layout/AppHeader.vue";
 export default {
   name: "MainLayout",
+  components: {
+    AppHeader,
+  },
 };
 </script>

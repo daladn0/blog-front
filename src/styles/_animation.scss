@@ -1,0 +1,11 @@
+// header dropdown animation
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 0.1s ease-in;
+}
+
+.slide-down-enter-from,
+.slide-down-leave-to {
+  transform: translateY(20px);
+  opacity: 0;
+}
