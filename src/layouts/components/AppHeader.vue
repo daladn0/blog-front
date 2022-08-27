@@ -22,8 +22,8 @@
             <button
               id="profile"
               @click="showDropdown = !showDropdown"
-              class="max-w-xs flex items-center space-x-4 px-2 py-1 rounded-full text-sm text-gray-600 font-medium transition-all hover:bg-gray-200"
-              :class="{ 'bg-gray-200': showDropdown }"
+              class="max-w-xs flex items-center space-x-4 px-2 py-1 rounded-full text-sm text-gray-600 font-medium transition-all border hover:border-gray-200"
+              :class="[showDropdown ? 'border-gray-200' : 'border-transparent']"
             >
               <img
                 class="w-8 h-8 rounded-full object-cover flex-shrink-0"
@@ -47,7 +47,11 @@
             v-else
             class="flex items-center h-full flex-col bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
           >
-            <AppBtn :rounded="true" @click="$router.push({ name: 'login' })">
+            <AppBtn
+              class="px-4 py-1.5"
+              :rounded="true"
+              @click="$router.push({ name: 'login' })"
+            >
               Login
             </AppBtn>
           </ul>
@@ -58,7 +62,7 @@
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
-import HeaderDropdown from "@/components/layout/HeaderDropdown.vue";
+import HeaderDropdown from "@/layouts/components/HeaderDropdown.vue";
 
 import DefaultAvatar from "@/assets/images/default-avatar.jpg";
 export default {
