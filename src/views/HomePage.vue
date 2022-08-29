@@ -1,15 +1,22 @@
 <template>
-  <div>
+  <div class="w-full max-w-2xl mx-auto pb-8">
+    <QuickPost v-if="isAuth" />
     <PostList :posts="posts" />
   </div>
 </template>
 
 <script>
-import PostList from "@/components/common/PostList.vue";
+import PostList from "@/components/common/Posts/PostList.vue";
+import QuickPost from "@/components/common/Posts/QuickPost.vue";
+import { mapGetters } from "vuex";
 export default {
   name: "HomeView",
   components: {
     PostList,
+    QuickPost,
+  },
+  computed: {
+    ...mapGetters("user", ["isAuth"]),
   },
   data() {
     return {

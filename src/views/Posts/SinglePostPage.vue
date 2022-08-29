@@ -1,12 +1,15 @@
 <template>
   <LoadingSpinner class="w-10 h-10 mx-auto my-8" v-if="isLoading" />
-  <div v-else class="bg-white rounded-lg shadow-lg p-4 space-y-4">
+  <div
+    v-else
+    class="w-6/12 mx-auto bg-white rounded-lg shadow-lg p-4 space-y-4"
+  >
     <div class="flex items-center">
       <div class="w-12 h-12 p-0.5 border-2 border-[#9333ea] rounded-full">
         <img
           class="w-full h-full object-cover rounded-full"
-          src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
-          alt="alt tag"
+          :src="post.author.avatar"
+          :alt="post.author.username"
         />
       </div>
 
@@ -23,8 +26,16 @@
 
     <hr />
 
-    <h3 class="text-2xl font-bold text-gray-800">{{ post?.title }}</h3>
-    <p>{{ post?.body }}</p>
+    <img
+      class="mx-auto w-full rounded-lg overflow-hidden"
+      src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+      alt="sad"
+    />
+
+    <h3 class="text-2xl font-bold text-gray-800 break-words">
+      {{ post?.title }}
+    </h3>
+    <p v-html="post.body" class="html break-words"></p>
 
     <hr />
 

@@ -1,19 +1,32 @@
+/* eslint-disable */
 import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
-import api from "@/api";
-import { withAsync } from "@/utils/async";
+import router from "@/router";
+import store from "@/store";
 
-import BaseComponents from "@/components/Base";
+import App from "@/App.vue";
+import Loader from "@/Loader.vue";
+
+import api from "@/api";
+import appSetup from "@/utils/appSetup";
 
 const app = createApp(App);
+const loaderApp = createApp(Loader);
 
-app.config.globalProperties.$api = api;
-app.config.globalProperties.$withAsync = withAsync;
+loaderApp.mount("#app");
 
-BaseComponents.forEach((component) => {
-  app.component(component.name, component);
-});
+api
+  .get("/user/refresh")
+  .then((res) => {
+    store.dispatch("user/login", res.data.user);
+    localStorage.setItem("token", res.data.tokens.accessToken);
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+  .finally(() => {
+    loaderApp.unmount("#app");
 
-app.use(store).use(router).mount("#app");
+    appSetup(app);
+    app.use(store).use(router);
+    app.mount("#app");
+  });

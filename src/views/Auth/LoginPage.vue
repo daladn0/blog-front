@@ -41,8 +41,9 @@ export default {
       this.isLoading = false;
 
       if (response) {
-        const { user } = response.data;
+        const { user, tokens } = response.data;
 
+        localStorage.setItem("token", tokens.accessToken);
         this.login(user);
         this.$router.push({ name: "home" });
 

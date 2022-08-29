@@ -1,8 +1,14 @@
+/* eslint-disable */
+
 import {
   MIN_USERNAME_LENGTH,
   MAX_USERNAME_LENGTH,
   MIN_PASSWORD_LENGTH,
+  POST_TITLE_MIN_LENGTH,
+  POST_TITLE_MAX_LENGTH,
 } from "@/constants";
+
+// auth
 
 export const validateLoginOrEmail = (value) => {
   if (!value) {
@@ -55,4 +61,18 @@ export const validateConfirmPassword = (value, ctx) => {
   if (value !== password) return "Passwords don't match";
 
   return true;
+};
+
+// post
+export const validatePostTitle = (value) => {
+  if (!value) return "Post title is required";
+
+  if (
+    value.length < POST_TITLE_MIN_LENGTH ||
+    value.length > POST_TITLE_MAX_LENGTH
+  ) {
+    return `Post should have from ${POST_TITLE_MIN_LENGTH} up to ${POST_TITLE_MAX_LENGTH}`;
+  }
+
+  return "asdasd";
 };

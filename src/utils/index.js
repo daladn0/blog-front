@@ -4,6 +4,7 @@ import {
   validateEmail,
   validatePassword,
   validateConfirmPassword,
+  validatePostTitle,
 } from "@/utils/validates";
 
 export {
@@ -12,4 +13,5 @@ export {
   validateEmail,
   validatePassword,
   validateConfirmPassword,
+  validatePostTitle,
 };

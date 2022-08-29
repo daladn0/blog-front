@@ -1,12 +1,21 @@
 <template>
-  <div class="bg-white rounded-lg border overflow-hidden shadow-lg">
+  <div class="bg-white rounded-lg border overflow-hidden shadow-lg relative">
+    <transition name="slide-down">
+      <AppDropdown
+        v-if="dropdownVisible"
+        @edit="$router.push({ name: 'create-post' })"
+        :items="dropItems"
+        class="absolute right-2 top-14 w-44 border"
+      />
+    </transition>
+
     <!-- post header -->
     <div class="flex items-center justify-between p-2.5 border-b">
       <div class="flex items-center">
         <img
           class="w-7 h-7 rounded-full object-cover mr-4 block"
-          src="https://i.guim.co.uk/img/media/48cb9586d9dd5c15b1ff15873e066d2977cb4482/66_0_1916_1150/master/1916.jpg?width=620&quality=85&fit=max&s=8c4a5febb4162c4ba3e870064339d34d"
-          alt="John Doe"
+          :src="post.author.avatar"
+          :alt="post.author.username"
         />
         <div>
           <p class="text-sm font-medium text-gray-900">
@@ -18,7 +27,11 @@
         </div>
       </div>
       <button
+        @click="dropdownVisible = !dropdownVisible"
         class="text-gray-600 p-2 block rounded-full transition-all hover:bg-gray-100 cursor-pointer"
+        :class="{
+          'bg-gray-100': dropdownVisible,
+        }"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -49,12 +62,11 @@
     <!-- post body -->
 
     <div class="p-4">
-      <h3 class="text-lg line-clamp-2 mb-2 font-medium">
+      <h3 class="text-lg line-clamp-2 mb-2 font-medium break-words">
         <router-link :to="{ name: 'single-post', params: { id: post._id } }">
           {{ post.title }}
         </router-link>
       </h3>
-      <p class="text-sm line-clamp-3 text-gray-800">{{ post.body }}</p>
       <div class="flex items-center justify-between mt-2">
         <router-link
           :to="{ name: 'single-post', params: { id: post._id } }"
@@ -66,7 +78,7 @@
           <router-link
             v-for="category in categories"
             :key="category._id"
-            to="/home"
+            :to="{ name: 'home' }"
             class="relative text-gray-600 text-sm font-medium hover:underline before:absolute before:w-1 before:h-1 before:rounded-full before:bg-gray-600 before:-left-2 before:top-1/2 before:transform before:-translate-y-1/2"
             >{{ category.title }}</router-link
           >
@@ -81,20 +93,36 @@
 
 <script>
 import { formatDate } from "@/utils/formaters";
+import AppDropdown from "@/components/common/AppDropdown.vue";
 export default {
   name: "PostItem",
-  methods: {
-    formatDate,
-  },
   props: {
     post: {
       type: Object,
     },
   },
+  data() {
+    return {
+      dropdownVisible: false,
+    };
+  },
   computed: {
     categories() {
       return this.post.categories.slice(0, 3);
     },
+  },
+  components: {
+    AppDropdown,
+  },
+  methods: {
+    formatDate,
+  },
+  created() {
+    this.dropItems = [
+      { title: "Edit", emit: "edit" },
+      { title: "Save", emit: "save" },
+      { title: "Delete", emit: "delete" },
+    ];
   },
 };
 </script>

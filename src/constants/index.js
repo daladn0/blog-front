@@ -65,9 +65,17 @@ export const ROLES = {
   USER: "USER",
 };
 
+// auth
 export const MIN_USERNAME_LENGTH = 2;
 export const MAX_USERNAME_LENGTH = 32;
 export const MIN_PASSWORD_LENGTH = 6;
+
+// post
+
+export const POST_TITLE_MIN_LENGTH = 14;
+export const POST_TITLE_MAX_LENGTH = 100;
+export const POST_BODY_MIN_LENGTH = 30;
+export const POST_BODY_MAX_LENGTH = 5000;
 
 export const TOAST_TYPES = {
   SUCCESS: "SUCCESS",

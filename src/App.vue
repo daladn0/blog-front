@@ -1,7 +1,7 @@
 <template>
   <component :is="layout">
     <router-view />
-    <div class="absolute left-4 bottom-4 space-y-4 w-1/2">
+    <div class="fixed left-4 bottom-4 space-y-4 w-1/2">
       <transition-group name="toasts">
         <AppToast
           v-for="toast in toastStack"
@@ -40,15 +40,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("user", ["login"]),
     ...mapActions("toast", ["deleteFromStackById"]),
-  },
-  async mounted() {
-    const { response } = await this.$withAsync(this.$api.get, "/user/refresh");
-
-    if (response) {
-      this.login(response.data.user);
-    }
   },
 };
 </script>

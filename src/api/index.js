@@ -7,6 +7,11 @@ const axiosOptions = {
 
 const axiosInstance = axios.create(axiosOptions);
 
+axiosInstance.interceptors.request.use((config) => {
+  config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
+  return config;
+});
+
 const api = (axios) => {
   return {
     get: (url, config) => axios.get(url, config),

@@ -37,10 +37,33 @@
               <HeaderDropdown
                 id="dropdown"
                 v-if="showDropdown"
-                class="absolute right-0 top-full mt-4 z-10 w-56"
                 @logout="onLogout"
-                :user="currentUser"
-              />
+                @create-post="$router.push({ name: 'create-post' })"
+                :items="dropList"
+                class="absolute right-0 top-full mt-4 z-10 w-56"
+              >
+                <template #header>
+                  <div class="text-sm text-gray-900 max-w-full">
+                    <button
+                      class="w-full flex items-center justify-start text-left max-w-full transition-all hover:bg-gray-100 hover:after:bg-gray-100 px-4 py-3 cursor-pointer after:w-4 after:h-4 after:bg-white after:block after:absolute after:right-4 after:bottom-full after:rotate-45 after:transform after:transition-all after:rounded after:translate-y-1/2"
+                    >
+                      <img
+                        class="w-8 h-8 rounded-full flex-shrink-0 mr-2 object-cover"
+                        :src="currentUser.avatar"
+                        alt="border avatar"
+                      />
+                      <div class="max-w-[80%]">
+                        <div class="font-medium max-w-full truncate">
+                          {{ currentUser.username }}
+                        </div>
+                        <div class="truncate max-w-full">
+                          {{ currentUser.email }}
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                </template>
+              </HeaderDropdown>
             </transition>
           </div>
           <ul
@@ -62,7 +85,7 @@
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
-import HeaderDropdown from "@/layouts/components/HeaderDropdown.vue";
+import HeaderDropdown from "@/components/common/AppDropdown.vue";
 
 import DefaultAvatar from "@/assets/images/default-avatar.jpg";
 export default {
@@ -74,6 +97,14 @@ export default {
     return {
       showDropdown: false,
     };
+  },
+  created() {
+    this.dropList = [
+      { title: "Create post", emit: "create-post" },
+      { title: "Settings", emit: "settings" },
+      { title: "Earnings", emit: "earnings" },
+      { title: "Sign out", emit: "logout", separated: true },
+    ];
   },
   computed: {
     ...mapGetters("user", ["isAuth", "currentUser"]),
